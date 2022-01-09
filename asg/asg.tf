@@ -19,6 +19,19 @@ resource "aws_launch_template" "template" {
   }
 }
 
+resource "aws_autoscaling_group" "bar" {
+  desired_capacity                      = var.INSTANCE_COUNT
+  max_size                              = 1
+  min_size                              = 1
+  vpc_zone_identifier                   = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS
+
+  launch_template {
+    id                                  = aws_launch_template.foobar.id
+    version                             = "$Latest"
+  }
+}
+
+
 resource "aws_security_group" "allow_ec2" {
   name                        = "allow_${var.COMPONENT}"
   description                 = "allow_${var.COMPONENT}"
