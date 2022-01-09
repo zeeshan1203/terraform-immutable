@@ -9,3 +9,5 @@ variable "LB_DNSNAME"       {}
 variable "LB_RULE_WEIGHT"   {}
 variable "LISTENER_ARN"     {}
 variable "HEALTH_PATH"      {}
+variable "ASG_MIN_SIZE"     {}
+variable "ASG_MAX_SIZE"     {}

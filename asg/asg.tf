@@ -19,57 +19,16 @@ resource "aws_launch_template" "template" {
   }
 }
 
-resource "aws_autoscaling_group" "bar" {
+resource "aws_autoscaling_group" "asg" {
   desired_capacity                      = var.INSTANCE_COUNT
-  max_size                              = 1
-  min_size                              = 1
+  max_size                              = var.ASG_MAX_SIZE
+  min_size                              = var.ASG_MIN_SIZE
   vpc_zone_identifier                   = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS
+  target_group_arns                     = [aws_lb_target_group.target-group.arn]
 
   launch_template {
-    id                                  = aws_launch_template.foobar.id
+    id                                  = aws_launch_template.template.id
     version                             = "$Latest"
   }
 }
 
-
-resource "aws_security_group" "allow_ec2" {
-  name                        = "allow_${var.COMPONENT}"
-  description                 = "allow_${var.COMPONENT}"
-  vpc_id                      = data.terraform_remote_state.vpc.outputs.VPC_ID
-
-  ingress {
-    description               = "SSH"
-    from_port                 = 22
-    to_port                   = 22
-    protocol                  = "tcp"
-    cidr_blocks               = [data.terraform_remote_state.vpc.outputs.VPC_CIDR, data.terraform_remote_state.vpc.outputs.DEFAULT_VPC_CIDR]
-  }
-
-  ingress {
-    description               = "PROMETHEUS"
-    from_port                 = 9100
-    to_port                   = 9100
-    protocol                  = "tcp"
-    cidr_blocks               = [data.terraform_remote_state.vpc.outputs.VPC_CIDR, data.terraform_remote_state.vpc.outputs.DEFAULT_VPC_CIDR]
-  }
-
-  ingress {
-    description               = "HTTP"
-    from_port                 = var.PORT
-    to_port                   = var.PORT
-    protocol                  = "tcp"
-    cidr_blocks               = [data.terraform_remote_state.vpc.outputs.VPC_CIDR]
-  }
-
-  egress {
-    from_port                 = 0
-    to_port                   = 0
-    protocol                  = "-1"
-    cidr_blocks               = ["0.0.0.0/0"]
-    ipv6_cidr_blocks          = ["::/0"]
-  }
-
-  tags                        = {
-    Name                      = "allow_${var.COMPONENT}"
-  }
-}
