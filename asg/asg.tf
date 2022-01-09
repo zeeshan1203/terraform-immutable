@@ -32,6 +32,7 @@ resource "aws_autoscaling_group" "asg" {
 }
 
 resource "aws_lb_listener_rule" "component-rule" {
+  count                       = var.COMPONENT == "frontend" ? 0 : 1
   listener_arn                = var.LISTENER_ARN
   priority                    = var.LB_RULE_WEIGHT
 
