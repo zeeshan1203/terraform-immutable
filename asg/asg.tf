@@ -20,6 +20,7 @@ resource "aws_launch_template" "template" {
 }
 
 resource "aws_autoscaling_group" "asg" {
+  name                                  = "${var.COMPONENT}-${var.ENV}"
   desired_capacity                      = var.INSTANCE_COUNT
   max_size                              = var.ASG_MAX_SIZE
   min_size                              = var.ASG_MIN_SIZE
