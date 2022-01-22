@@ -10,6 +10,7 @@ resource "aws_launch_template" "template" {
   }
   instance_type                         = var.INSTANCE_TYPE
   vpc_security_group_ids                = [aws_security_group.allow_ec2.id]
+  user_data                             = filebase64("${path.module}/env-${var.ENV}.sh")
   tag_specifications {
     resource_type                       = "instance"
     tags = {
