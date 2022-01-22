@@ -11,3 +11,4 @@ variable "LISTENER_ARN"     {}
 variable "HEALTH_PATH"      {}
 variable "ASG_MIN_SIZE"     {}
 variable "ASG_MAX_SIZE"     {}
+variable "APP_VERSION"      {}

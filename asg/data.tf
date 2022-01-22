@@ -4,6 +4,11 @@ data "aws_ami" "centos7" {
   owners           = ["973714476881"]
 }
 
+data "aws_ami" "component-ami" {
+  name_regex        = "^${var.COMPONENT}-${var.APP_VERSION}"
+  owners            = ["self"]
+}
+
 data "terraform_remote_state" "vpc" {
   backend = "s3"
 
