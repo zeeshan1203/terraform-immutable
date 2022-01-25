@@ -16,6 +16,7 @@ resource "aws_launch_template" "template" {
     tags = {
       Name                              = "${var.COMPONENT}-${var.ENV}"
       Monitor                           = "yes"
+      Environment                       = var.ENV
     }
   }
 }
