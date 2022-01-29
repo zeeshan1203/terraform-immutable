@@ -9,7 +9,7 @@ for comp in catalogue user cart shipping payment ; do
   fi
 done
 
-if [ -f /etc/nginx/default.d/roboshop.conf ]; do
+if [ -f /etc/nginx/default.d/roboshop.conf ]; then
   sed -i -e 's|ENV|prod|' /etc/nginx/default.d/roboshop.conf
   systemctl restart nginx
-done
+fi
