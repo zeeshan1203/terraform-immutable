@@ -1,7 +1,7 @@
 resource "aws_elasticache_cluster" "example" {
   cluster_id                            = "redis-${var.ENV}"
   engine                                = "redis"
-  node_type                             = "cache.t3.micro"
+  node_type                             = "cache.t2.micro"
   num_cache_nodes                       = 1
   parameter_group_name                  = "default.redis5.0"
   engine_version                        = "5.0.6"
