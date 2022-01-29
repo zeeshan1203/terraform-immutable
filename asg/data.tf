@@ -5,6 +5,7 @@ data "aws_ami" "centos7" {
 }
 
 data "aws_ami" "component-ami" {
+  most_recent       = true
   name_regex        = "^${var.COMPONENT}-${var.APP_VERSION}"
   owners            = ["self"]
 }
